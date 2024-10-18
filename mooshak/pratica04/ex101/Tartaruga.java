@@ -28,9 +28,9 @@ class Board{
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
                 res += board[i][j];
-                res += " ";
+                if (j < cols-1) res += " ";
             } 
-            res += "\n";
+           if (i < rows-1) res += "\n";
         }
         return res;
     }
@@ -63,6 +63,7 @@ class Board{
                     break;
                 case 'D':
                     pen = true;
+                    board[x][y] = '*';
                     break;
                 case 'L':
                     left();
@@ -89,7 +90,6 @@ class Board{
 
     private void walk(int n){
         if (pen){
-            board[x][y] = '*';
             for (int i = 0; i < n; i++){
                 validCordinate(x + posibleDirections[direction][0], y + posibleDirections[direction][1]);
                 board[x][y] = '*';
@@ -112,8 +112,8 @@ class Board{
         int porc = porcentagem();
         int lin = 0;
         int col = 0;
-        for (int i = 0; i < rows; i++) lin += checkLine(i, 0, 1, 0);
-        for (int j = 0; j < rows; j++) col += checkLine(0, j, 0, 1);
+        for (int i = 0; i < rows; i++) lin += checkLine(i, 0, 0, 1);
+        for (int j = 0; j < rows; j++) col += checkLine(0, j, 1, 0);
         System.out.println(porc + " " + lin + " " + col);
     }
 
@@ -140,13 +140,14 @@ class Board{
         int c = in.nextInt();
         Board newBoard = new Board(r, c, in);
 
-        if (findBoard(newBoard))  System.out.println("sim");
-        else System.out.println("nao");
+        if (findBoard(newBoard))  System.out.println("Sim");
+        else System.out.println("Nao");
     }
 
     private boolean findBoard(Board b){
-        for (int i = 0; i < rows - b.rows; i++){
-            for (int j = 0; j < cols - b.cols; j++){
+        //percorre o tabuleiro novo, cada casa
+        for (int i = 0; i < rows - b.rows+1; i++){
+            for (int j = 0; j < cols - b.cols+1; j++){
                 if(searchWord(b, i, j)) return true;
             }
         }
