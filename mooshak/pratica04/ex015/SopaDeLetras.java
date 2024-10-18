@@ -33,73 +33,86 @@ class Board {
         }
     }
 
-    public void readWords(Scanner in, int w){
-        String words = new String[w];
-        for(int i = 0; i < w; i++)
-            words[i] = in.next();
+    public void createBoard(){
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                board[i][j] = '.';
+            }
+        }
     }
 
-    public void searchWords(String[] words){
-        Boolean wordsBool = new Boolean[w];
-        for (int i = 0; i < rows; i++) checkline(wordsBool, buildLine(i, 0, 0, 1), true, i);
-        for (int j = 0; j < cols; j++) checkline(wordsBool, buildLine(0, j, 1, 0), false, j);
+    public Board searchWords(String[] words, int w){
+        Board b = new Board(rows, cols);
+        String reverso;
+        b.createBoard();
+        
+        for(int i = 0; i < rows || i < cols; i++){
+            if (i < rows) checkLine(b, words, i, 0, 0, 1, "cols", cols);
+            if (i < cols) checkLine(b, words, 0, i, 1, 0, "rows", rows);
+        }
+
+        return b;
     }
 
-    private void checkLine(Boolean[] wordsBool, String line, boolean rol, int n){
+    public void checkLine(Board b, String[] words, int x, int y, int incx, int incy, String type, int size){
+        String line = "";
         int ind;
-        for (int i = 0; i < words.length(); i++){
-            ind = findWord(line, word[i])
+        String str;
+        for(int i = 0, xx = x, yy = y; i < size; i++, xx +=incx, yy += incy){
+            line += board[xx][yy];
+        }
+        
+        for (int w = 0; w < words.length; w++){
+            str = words[w];
+            ind = line.indexOf(str);
+
             if (ind != -1) {
-
+                changeLine(b, x, y, incx, incy, str.length(), ind, type);
+                continue;
             }
-            
+
+            ind = line.indexOf(new StringBuilder(str).reverse().toString());
+            if (ind != -1) {
+                changeLine(b, x, y, incx, incy, str.length(), ind, type);
+            }
         }
     }
 
-    private void foundWord(Boolean[] wordsBool, int size, int x, int y, int incx, int incy){
-        for (int i = ind; i < size; i++){
-            wordsBool[xx][yy]
-        }
+    public void changeLine(Board b, int x, int y, int incx, int incy, int sizeW, int ind, String type){
+        if (type == "rows") x = ind;
+        else y = ind;
+        preencheBoard(b, x, y, incx, incy, sizeW);
     }
 
-    private void buildLine(int x, int y, int incx, int incy, int size){
-        String buf = "";
-        for(int i = 0, xx = x, yy = y; i < size; i++, xx += incx, yy += incy){
-            buf += board[xx][yy];
+    public void preencheBoard(Board b, int x, int y, int incx, int incy, int sizeW){
+        for(int i = 0, xx = x, yy = y; i < sizeW; i++, xx += incx, yy += incy){
+            b.board[xx][yy] = board[xx][yy];
         }
-        r = buf;
-    }
-
-    private int findWord(String line, String w){
-        int ind = 0;
-        for (int i = 0; i < line.length(); i++){
-            if (line.charAt(i) == w.charAt(ind)){
-                ind++;
-            } else if (ind != 0) {
-                ind = 0;
-            }
-
-            if (ind == w.length.length) {
-                return i - ind; // + 1????
-            }
-        }
-        return -1;
     }
 }
 
 class SopaDeLetras {
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
-        int r = in.nextInt();
-        int c = in.nextInt();
+        int r = in.nextInt(), c = in.nextInt(), n = 1, w;
+        Board b, newB;
 
-        Board b = new Board(r, c);
-        b.readBoard(in);
+        while (r != 0 && c != 0){
+            b = new Board(r, c);
+            b.readBoard(in);
 
-        int w = in.nextInt();
-        b.readWords(in, w);
+            w = in.nextInt();
 
+            String[] words = new String[w];
+            for(int i = 0; i < w; i++)
+                words[i] = in.next();
 
-        searchWords(words);
+            newB = b.searchWords(words, w);
+            System.out.println("Input #" + n);
+            System.out.print(newB);
+            r = in.nextInt();
+            c = in.nextInt();
+            n++;
+        }
     }
 }
