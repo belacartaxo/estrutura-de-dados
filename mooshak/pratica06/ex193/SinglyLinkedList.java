@@ -96,15 +96,29 @@ public class SinglyLinkedList<T> {
         return str;
     }
 
-    public SinglyLinkedList<T> copy(){
-        SinglyLinkedList<T> newList = new SinglyLinkedList<T>();
-        if(isEmpty()) return newList;
+
+    public void removeAll(T value) {
+        if (isEmpty()) return;
         Node<T> cur = first;
-        newList.addLast(cur.getValue());
-        for(int i = 0; i < size-1; i++){
-            cur = cur.getNext();
-            newList.addLast(cur.getValue());
-        }
-        return newList;
+        Node<T> ant;
+        if (cur.getValue().equals(value)){
+            first = first.getNext();
+            size--;
+        };
+        ant = cur;
+        while(cur.getNext() != null){
+            cur = cur.getNext(); 
+            if (cur.getValue().equals(value)){
+                if(cur == first){
+                    first = first.getNext();
+                    size--;                
+                } else {
+                    ant.setNext(cur.getNext());
+                    size--;   
+                }
+            } else{
+                ant = cur;
+            }
+        } 
     }
 }

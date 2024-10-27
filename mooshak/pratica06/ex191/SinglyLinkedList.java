@@ -96,15 +96,19 @@ public class SinglyLinkedList<T> {
         return str;
     }
 
-    public SinglyLinkedList<T> copy(){
-        SinglyLinkedList<T> newList = new SinglyLinkedList<T>();
-        if(isEmpty()) return newList;
+    private void addAfter(Node<T> node, Node<T> newNode){
+        size++;
+        node.setNext(newNode);
+    }
+
+    public void duplicate(){
+        if(isEmpty()) return;
         Node<T> cur = first;
-        newList.addLast(cur.getValue());
-        for(int i = 0; i < size-1; i++){
-            cur = cur.getNext();
-            newList.addLast(cur.getValue());
+        addAfter(cur, new Node<T>(cur.getValue(), cur.getNext()));
+        for(int i = 0; i < size-2; i+=2){ // pula os dois primeiros, por isso é menos dois, duplica tudo
+            cur = cur.getNext().getNext();
+            addAfter(cur, new Node<T>(cur.getValue(), cur.getNext()));
         }
-        return newList;
+
     }
 }
