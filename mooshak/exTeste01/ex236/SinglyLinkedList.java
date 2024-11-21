@@ -110,18 +110,27 @@ public class SinglyLinkedList<T> {
    }
 
    public void shift(int k){
+      if (isEmpty() ||size == 1|| size == k) return;
+    
+      SinglyLinkedList<T> auxList = new SinglyLinkedList<T>();
       Node<T> cur, aux;
-      for (int i=0; i<k; i++){
-         if (isEmpty()) return;
-         if (size == 1) return;
-         cur = first;
-         for (int j=0; j<size-2; j++)
-            cur = cur.getNext();
+      int i =0;
 
-         aux=cur.getNext();
-         cur.setNext(cur.getNext().getNext());
-         aux.setNext(first);
-         first = aux;
+      cur = first;
+      while (cur.getNext() != null){
+         if (i >= size-k-1){
+            auxList.addFirst(cur.getNext().getValue());
+            cur.setNext(cur.getNext().getNext());
+            size--;
+         } else {
+            cur = cur.getNext();
+         }
+         i++;
+      }
+
+      while(auxList.size() > 0){
+         addFirst(auxList.getFirst());
+         auxList.removeFirst();
       }
    }
 

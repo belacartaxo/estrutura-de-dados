@@ -7,6 +7,7 @@ public class ED236{
         newList.addLast('d');
         newList.addLast('e');
 
+        System.out.println(newList);
         newList.shift(4);
         System.out.println(newList);
 
