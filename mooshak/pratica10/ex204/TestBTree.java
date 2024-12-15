@@ -14,6 +14,7 @@ public class TestBTree {
       Scanner in = new Scanner(System.in);
       BTree<Integer> t = LibBTree.readIntTree(in);
     
-      t.printInOrder();
+      //t.printInOrder();
+      System.out.println(t.numberLeafs());
    }
 }

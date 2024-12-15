@@ -146,4 +146,14 @@ public class BTree<T> {
       System.out.println();
    }
 
+   // Numero de folhas da arvore   
+   public int numberLeafs() {
+      return numberLeafs(root);
+   }
+
+   private int numberLeafs(BTNode<T> n) {
+      if (n == null) return 0;
+      if (n.getRight() == null && n.getLeft() == null) return 1;
+      return numberLeafs(n.getLeft()) + numberLeafs(n.getRight());
+   }
 }
