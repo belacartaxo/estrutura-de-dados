@@ -152,8 +152,8 @@ public class BTree<T> {
    }
 
    private boolean strict(BTNode<T> n) {
-      if (!(n.getLeft() == null && n.getRight() == null)) return false;
-      if (!strict(n.getLeft()) || !strict(n.getRight())) return false;
-      return true;
+      if (n == null) return true;
+      if ((n.getLeft() == null) != (n.getRight() == null)) return false;
+      return strict(n.getLeft()) && strict(n.getRight());
    }
 }
