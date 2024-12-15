@@ -145,15 +145,4 @@ public class BTree<T> {
       }
       System.out.println();
    }
-
-   // Numero de folhas da arvore   
-   public int nodesLevel(int k) {
-      return nodesLevel(root, k, 0);      
-   }
-
-   private int nodesLevel(BTNode<T> n, int k, int p) {
-      if (n == null) return 0;
-      if (k == p) return 1;
-      return nodesLevel(n.getLeft(), k, p+1) + nodesLevel(n.getRight(), k, p+1);
-   }
 }
