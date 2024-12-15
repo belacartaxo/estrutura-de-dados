@@ -7,16 +7,20 @@
 // -----------------------------------------------------------
 
 import java.util.Scanner;
+import java.util.Arrays;
 
-public class ED211 {
-   public static int countEven(BTree<Integer> t) {
-      return countEven(t.getRoot());
+public class ED212 {
+   public static int[] sumLevels(BTree<Integer> t) {
+      int s[] = new int[t.depth()+1];
+      sumLevels(t.getRoot(), s, 0);
+      return s;
    }
 
-   public static int countEven(BTNode<Integer> n) {
-      if (n == null) return 0;
-      if (n.getValue() % 2 == 0) return 1 + countEven(n.getLeft()) + countEven(n.getRight());
-      return countEven(n.getLeft()) + countEven(n.getRight());
+   public static void sumLevels(BTNode<Integer> n, int[] s, int p) {
+      if (n == null) return;
+      s[p] += n.getValue();
+      sumLevels(n.getRight(), s, p+1);
+      sumLevels(n.getLeft(), s, p+1);
    }
 
    public static void main(String[] args) {
@@ -24,6 +28,6 @@ public class ED211 {
       Scanner in = new Scanner(System.in);
       BTree<Integer> t = LibBTree.readIntTree(in);
 
-      System.out.println(countEven(t));
+      System.out.println(Arrays.toString(sumLevels(t)));
    }
 }
