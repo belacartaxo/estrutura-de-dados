@@ -147,13 +147,14 @@ public class BTree<T> {
    }
 
    // Numero de folhas da arvore   
-   public boolean strict() {
-      return strict(root);
+   public T path(String s) {
+      if (s.equals("R")) return root.getValue();
+      return path(root, s);
    }
 
-   private boolean strict(BTNode<T> n) {
-      if (n == null) return true;
-      if ((n.getLeft() == null) != (n.getRight() == null)) return false;
-      return strict(n.getLeft()) && strict(n.getRight());
+   private T path(BTNode<T> n, String s) {
+      if (s.equals("")) return n.getValue();
+      if (s.charAt(0) == 'E') return path(n.getLeft(), s.substring(1));
+      return path(n.getRight(), s.substring(1));
    }
 }
