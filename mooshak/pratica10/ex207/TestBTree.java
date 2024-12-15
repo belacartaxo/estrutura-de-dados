@@ -15,6 +15,6 @@ public class TestBTree {
       BTree<Integer> t = LibBTree.readIntTree(in);
     
       //t.printInOrder();
-      System.out.println(t.path("DE"));
+      System.out.println( t.nodesLevel(3));
    }
 }
