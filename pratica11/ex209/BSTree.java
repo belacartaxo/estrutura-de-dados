@@ -202,22 +202,14 @@ public class BSTree<T extends Comparable<? super T>> {
    }
 
    //menor e maior valor
-   public T minValue(){
-      return minValue(root);
+   public int countBetween(T a, T b){
+      return countBetween(root, a, b);
    }
 
-   public T minValue(BSTNode<T> n){
-      if (n.getLeft() == null) return n.getValue();
-      return minValue(n.getLeft());
-   }
-
-   public T maxValue(){
-      return maxValue(root);
-   }
-
-   public T maxValue(BSTNode<T> n){
-      if (n.getRight() == null) return n.getValue();
-      return maxValue(n.getRight());
+   public int countBetween(BSTNode<T> n, T a, T b){
+      if(n == null) return 0;
+      if (n.getValue().compareTo(a) >= 0 && n.getValue().compareTo(b) <= 0) return 1 + countBetween(n.getLeft(), a, b) + countBetween(n.getRight(), a, b);
+      return countBetween(n.getLeft(), a, b) + countBetween(n.getRight(), a, b);
    }
 
 }
