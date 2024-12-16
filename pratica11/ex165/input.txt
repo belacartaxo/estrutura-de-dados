@@ -1,16 +1,4 @@
-15
-fernando
-pedro
-luis
-joao
-fernando
-eduardo
-eduardo
-luisa
-joao
-miguel
-luis
-pedro
-fabio
-joao
-fernando
+4
+10 6 2 8
+10
+4 8 2 5 21 10 16 3 12 15
