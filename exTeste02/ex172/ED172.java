@@ -23,5 +23,6 @@ class ED172 {
       for (String res : m.keys()){
          System.out.println(res + ": " + m.get(res));
       }
+      in.close();
    }
 }

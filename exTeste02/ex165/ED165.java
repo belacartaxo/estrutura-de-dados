@@ -30,5 +30,7 @@ class ED165 {
          k = in.nextInt();
          System.out.println(k + ": " + sum(t, k));
       }
+
+      in.close();
    }
 }

@@ -15,5 +15,6 @@ class ED164 {
       
       for (int i=0; i<n; i++) t.insert(in.next());
       System.out.println(t.numberNodes());
+      in.close();
    }
 }
